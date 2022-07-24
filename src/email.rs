@@ -12,6 +12,8 @@ use crate::error::InvalidEmailError;
 /// ## Example:
 ///
 /// ```rust
+/// use email_type_rs::email::Email;
+///
 /// let email = Email::parse("lexi.lambda@gmail.com")?;
 /// ```
 ///
