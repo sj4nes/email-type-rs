@@ -3,6 +3,10 @@ name = "email-type-rs"
 version = "1.0.0"
 edition = "2021"
 
+[features]
+default = []
+utils = []
+
 [dependencies]
 thiserror = "1.0.31"
 
