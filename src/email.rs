@@ -6,6 +6,15 @@ use validate::rules::email;
 
 use crate::error::InvalidEmailError;
 
+/// Email type for type-driven design, also based on
+/// approach [Parse, don't validate](https://lexi-lambda.github.io/blog/2019/11/05/parse-don-t-validate/)
+///
+/// ## Example:
+///
+/// ```rust
+/// let email = Email::parse("lexi.lambda@gmail.com")?;
+/// ```
+///
 #[derive(Deserialize, PartialEq, Hash, Eq, Clone, Debug)]
 pub struct Email(String);
 
