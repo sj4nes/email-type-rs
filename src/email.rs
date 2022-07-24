@@ -14,7 +14,10 @@ use crate::error::InvalidEmailError;
 /// ```rust
 /// use email_type_rs::email::Email;
 ///
-/// let email = Email::parse("lexi.lambda@gmail.com")?;
+/// match Email::parse("lexi.lambda@gmail.com") {
+///     Ok(email) => println!("email: {}", email.as_ref()),
+///     Err(e) => eprintln!("{}", e)
+/// }
 /// ```
 ///
 #[derive(Deserialize, PartialEq, Hash, Eq, Clone, Debug)]
