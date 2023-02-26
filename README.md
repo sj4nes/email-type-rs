@@ -7,7 +7,7 @@ Email type for approach suggested by Alexis King - ["Parse, don't validate"](htt
 Add dependency:
 
 ```toml
-email-type-rs = { git = "https://github.com/lebe-dev/email-type-rs", version = "0.1.0", features = ["utils"] }
+email-type-rs = { git = "https://github.com/lebe-dev/email-type-rs", version = "1.0.0", features = ["utils"] }
 ```
 
 Use:
@@ -22,7 +22,7 @@ Add to `Cargo.toml`:
 
 ```toml
 [dev-dependencies]
-email-type-rs = { git = "https://github.com/lebe-dev/email-type-rs", version = "0.1.0", features = ["utils"] }
+email-type-rs = { git = "https://github.com/lebe-dev/email-type-rs", version = "1.0.0", features = ["utils"] }
 ```
 
 Functions:
