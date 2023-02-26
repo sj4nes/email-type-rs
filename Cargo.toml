@@ -2,6 +2,14 @@
 name = "email-type-rs"
 version = "1.0.0"
 edition = "2021"
+description = "Email type for 'parse, don't validate' approach"
+license = "MIT OR Apache-2.0"
+authors = ["Eugene Lebedev <eugene.0x90@gmail.com>"]
+homepage = "https://github.com/lebe-dev/email-type-rs"
+repository = "https://github.com/lebe-dev/email-type-rs"
+readme = "README.md"
+keywords = ["types", "email"]
+categories = ["parsing", "parser-implementations", "email", "data-structures"]
 
 [features]
 default = []
