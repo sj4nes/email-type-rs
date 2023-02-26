@@ -13,7 +13,12 @@ email-type-rs = { git = "https://github.com/lebe-dev/email-type-rs", version = "
 Use:
 
 ```rust
-let email = Email::parse("lexi.lambda@gmail.com")?;
+let email = Email::from_str("lexi.lambda@gmail.com")?;
+let email = "lexi.lambda@gmail.com".parse()?;
+
+// fn some_func(value: &str)
+some_func(email.as_str());
+some_func(&email);
 ```
 
 ## Util functions
@@ -28,3 +33,8 @@ email-type-rs = { git = "https://github.com/lebe-dev/email-type-rs", version = "
 Functions:
 
 - `get_random_email()` - return random `Email`. Useful for tests.
+
+## Thanks
+
+- Alexis King, article - [Parse, don't validate](https://lexi-lambda.github.io/blog/2019/11/05/parse-don-t-validate/)
+- Justin Wernick, article - [The Newtype Pattern In Rust](https://www.worthe-it.co.za/blog/2020-10-31-newtype-pattern-in-rust.html)
