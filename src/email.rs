@@ -13,9 +13,10 @@ use crate::error::InvalidEmailError;
 /// ## Example:
 ///
 /// ```rust
+/// use std::str::FromStr;
 /// use email_type_rs::email::Email;
 ///
-/// match Email::parse("lexi.lambda@gmail.com") {
+/// match Email::from_str("lexi.lambda@gmail.com") {
 ///     Ok(email) => println!("email: {}", email.as_ref()),
 ///     Err(e) => eprintln!("{}", e)
 /// }
