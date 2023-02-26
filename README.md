@@ -21,6 +21,18 @@ some_func(email.as_str());
 some_func(&email);
 ```
 
+Useful for REST API Endpoints, i.e. `/api/register` accepts:
+
+```rust
+#[derive(Deserialize)]
+struct UserRegistrationRequest {
+    pub email: Email,
+    ...
+}
+```
+
+Incoming JSON with invalid value in `email` field will raise deserialization error (Serde).
+
 ## Util functions
 
 Add to `Cargo.toml`:
