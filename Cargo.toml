@@ -1,6 +1,6 @@
 [package]
 name = "email-type-rs"
-version = "1.0.0"
+version = "1.0.1"
 edition = "2021"
 description = "Email type for 'parse, don't validate' approach"
 license = "MIT OR Apache-2.0"
