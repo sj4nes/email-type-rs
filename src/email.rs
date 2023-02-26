@@ -1,3 +1,4 @@
+use std::ops::Deref;
 use std::str::FromStr;
 
 use log::error;
@@ -21,20 +22,8 @@ use crate::error::InvalidEmailError;
 /// ```
 ///
 #[derive(Deserialize, PartialEq, Hash, Eq, Clone, Debug)]
+#[serde(try_from = "String", into = "String")]
 pub struct Email(String);
-
-impl Email {
-    pub fn parse(s: &str) -> Result<Email, InvalidEmailError> {
-        match email().validate(&s) {
-            Ok(_) => Ok(Self(s.to_string())),
-
-            Err(e) => {
-                error!("invalid e-mail '{}': {}", s, e.get_message());
-                Err(InvalidEmailError::ParseError)
-            }
-        }
-    }
-}
 
 impl Serialize for Email {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
@@ -49,9 +38,14 @@ impl FromStr for Email {
     type Err = InvalidEmailError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let email = Email::parse(s)?;
+        match email().validate(&s) {
+            Ok(_) => Ok(Self(s.to_string())),
 
-        Ok(email)
+            Err(e) => {
+                error!("invalid e-mail '{}': {}", s, e.get_message());
+                Err(InvalidEmailError::ParseError)
+            }
+        }
     }
 }
 
@@ -61,28 +55,81 @@ impl AsRef<str> for Email {
     }
 }
 
+impl TryFrom<String> for Email {
+    type Error = InvalidEmailError;
+
+    fn try_from(value: String) -> Result<Self, Self::Error> {
+        Email::from_str(&value)
+    }
+}
+
+impl From<Email> for String {
+    fn from(value: Email) -> Self {
+        value.0
+    }
+}
+
+impl Deref for Email {
+    type Target = str;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
 #[cfg(test)]
-mod email_tests {
+mod tests {
+    use std::str::FromStr;
+
     use fake::{Fake, Faker};
     use fake::faker::internet::en::FreeEmail;
+    use serde::{Deserialize, Serialize};
 
     use crate::email::Email;
+
+    #[derive(Serialize, Deserialize, PartialEq, Debug)]
+    struct User {
+        pub email: Email
+    }
 
     #[test]
     fn return_ok_for_valid_email() {
         for _ in 1..30 {
             let email = FreeEmail().fake::<String>();
-            assert!(Email::parse(&email).is_ok());
+            assert!(Email::from_str(&email).is_ok());
         }
     }
 
     #[test]
     fn return_error_for_invalid_email() {
-        assert!(Email::parse("").is_err());
+        assert!(Email::from_str("").is_err());
 
         for _ in 1..30 {
-            let value = Faker.fake::<String>();
-            assert!(Email::parse(&value).is_err());
+            let value = get_random_string();
+            assert!(Email::from_str(&value).is_err());
         }
+    }
+
+    #[test]
+    fn serialization_deserialization_test_for_invalid_value() {
+        let json = "{\"email\":\"invalid-email\"}".to_string();
+        match serde_json::from_str::<User>(&json) {
+            Ok(_) => panic!("error expected"),
+            Err(e) => println!("{}", e)
+        }
+    }
+
+    #[test]
+    fn use_as_str() {
+        let email = Email::from_str("a@b.com").unwrap();
+        assert_str_func(&email);
+    }
+
+    fn get_random_string() -> String {
+        Faker.fake::<String>()
+    }
+
+    fn assert_str_func(_: &str) {
+        assert!(true)
     }
 }
