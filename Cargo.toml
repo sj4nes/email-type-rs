@@ -18,7 +18,7 @@ utils = []
 [dependencies]
 thiserror = "1.0.31"
 
-validate = "0.6.1"
+validate = { git = "https://github.com/sj4nes/validate.git" }
 
 serde = { version = "1.0", features = ["derive"] }
 
